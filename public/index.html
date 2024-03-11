@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>视频同步播放</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    window.onload = () => {
+      const video = document.getElementById('video');
+      const fileInput = document.getElementById('file-input');
+
+      fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const fileURL = URL.createObjectURL(file);
+          video.src = fileURL;
+        }
+      });
+
+      video.addEventListener('play', () => {
+        console.log("play")
+        socket.emit('play');
+      });
+
+      video.addEventListener('pause', () => {
+        console.log("pause")
+        socket.emit('pause');
+      });
+
+      socket.on('play', () => {
+        if (video.paused) {
+          video.play();
+        }
+      });
+
+      socket.on('pause', () => {
+        if (!video.paused) {
+          video.pause();
+        }
+      });
+    };
+  </script>
+
+</head>
+
+<body>
+  <input type="file" id="file-input" accept="video/*">
+  <video id="video" controls>
+    您的浏览器不支持 HTML5 video 标签。
+  </video>
+</body>
+
+</html>
