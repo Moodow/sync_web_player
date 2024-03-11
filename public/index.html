@@ -4,6 +4,29 @@
 <head>
   <meta charset="UTF-8">
   <title>视频同步播放</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    input[type="file"] {
+      margin-top: 10px;
+    }
+
+    video {
+      width: 90%;
+      max-height: 90%;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  </style>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
@@ -47,10 +70,10 @@
 </head>
 
 <body>
-  <input type="file" id="file-input" accept="video/*">
   <video id="video" controls>
     您的浏览器不支持 HTML5 video 标签。
   </video>
+  <input type="file" id="file-input" accept="video/*">
 </body>
 
 </html>
